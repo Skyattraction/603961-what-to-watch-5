@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import AddNewCommentForm from "../add-new-comment-form/add-new-comment-form";
 
@@ -42,17 +41,13 @@ const AddReviewPage = () => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src="/img/the-grand-budapest-hotel-poster.jpg" alt={name} width="218" height="327" />
+          <img src="/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel" width="218" height="327" />
         </div>
       </div>
 
       <AddNewCommentForm />
     </section>
   );
-};
-
-AddReviewPage.propTypes = {
-  films: PropTypes.array.isRequired,
 };
 
 export default AddReviewPage;
