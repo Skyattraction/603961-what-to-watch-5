@@ -31,7 +31,10 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  header: PropTypes.shape(),
+  header: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    avatar: PropTypes.bool,
+  })),
 };
 
 export default Header;

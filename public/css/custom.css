@@ -1,0 +1,3 @@
+.small-movie-card__image:hover .small-movie-card__preview-video {
+  position: relative;
+  z-index: 2; }
