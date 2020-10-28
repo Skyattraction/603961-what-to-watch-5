@@ -4,9 +4,10 @@ import FilmsList from "../films-list/films-list";
 import PlayButton from "../play-button/play-button";
 import MyListButton from "../my-list-button/my-list-button";
 import Footer from "../footer/footer";
+import Header from "../header/header";
 
 const MainPage = (props) => {
-  const {movieName, movieGenre, movieYear, films, history} = props;
+  const {movieName, movieGenre, movieYear, films, header, history} = props;
 
   return (
     <div className="main-page">
@@ -41,22 +42,7 @@ const MainPage = (props) => {
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+        <Header header={header} />
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
@@ -135,6 +121,7 @@ MainPage.propTypes = {
   movieGenre: PropTypes.string.isRequired,
   movieYear: PropTypes.number.isRequired,
   films: PropTypes.array.isRequired,
+  header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
 };
 

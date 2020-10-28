@@ -10,7 +10,7 @@ import PlayerPage from "../player-page/player-page";
 
 const App = (props) => {
 
-  const {movieName, movieGenre, movieYear, films} = props;
+  const {movieName, movieGenre, movieYear, films, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -24,21 +24,27 @@ const App = (props) => {
               movieGenre={movieGenre}
               movieYear={movieYear}
               films={films}
+              header={{avatar: true, customClass: `movie-card__head`}}
               history={history}
             />
           )}
         />
         <Route exact path="/login">
-          <SignInPage header={{title: `Sign In`}} />
+          <SignInPage header={{title: `Sign In`, customClass: `user-page__head`}} />
         </Route>
         <Route exact path="/mylist">
-          <MyListPage films={films} header={{title: `My list`, avatar: true}} />
+          <MyListPage films={films} header={{title: `My list`, avatar: true, customClass: `user-page__head`}} />
         </Route>
         <Route
           exact
           path="/films/:id"
           render={({history}) => (
-            <MoviePage films={films} history={history} />
+            <MoviePage
+              films={films}
+              reviews={reviews}
+              history={history}
+              header={{avatar: true, customClass: `movie-card__head`}}
+            />
           )}
         />
         <Route
@@ -65,6 +71,7 @@ App.propTypes = {
   movieGenre: PropTypes.string.isRequired,
   movieYear: PropTypes.number.isRequired,
   films: PropTypes.array.isRequired,
+  reviews: PropTypes.array,
 };
 
 export default App;
