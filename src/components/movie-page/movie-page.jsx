@@ -63,7 +63,13 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  films: PropTypes.array.isRequired,
+  films: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
   reviews: PropTypes.array,
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
