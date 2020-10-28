@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 
 const Header = (props) => {
   const {header} = props;
-  const {title, avatar} = header;
+  const {title, avatar, customClass} = header;
+
   return (
-    <header className="page-header user-page__head">
+    <header className={`page-header  ${customClass}`}>
       <div className="logo">
         <Link to="/" className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
@@ -31,10 +32,11 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  header: PropTypes.arrayOf(PropTypes.shape({
+  header: PropTypes.shape({
     title: PropTypes.string,
     avatar: PropTypes.bool,
-  })),
+    customClass: PropTypes.string,
+  }),
 };
 
 export default Header;

@@ -53,13 +53,13 @@ class Tabs extends PureComponent {
       <div className="movie-card__desc">
         <nav className="movie-nav movie-card__nav">
           <ul className="movie-nav__list">
-            <li className={`movie-nav__item  ${isOverviewTabActive ? `movie-nav__item--active` : ``}`}>
+            <li className={`movie-nav__item ${isOverviewTabActive ? `movie-nav__item--active` : ``}`}>
               <a onClick={this.handleClickOverview} href="#" className="movie-nav__link">Overview</a>
             </li>
-            <li className={`movie-nav__item  ${isDetailsTabActive ? `movie-nav__item--active` : ``}`}>
+            <li className={`movie-nav__item ${isDetailsTabActive ? `movie-nav__item--active` : ``}`}>
               <a onClick={this.handleClickDetails} href="#" className="movie-nav__link">Details</a>
             </li>
-            <li className={`movie-nav__item  ${isReviewsTabActive ? `movie-nav__item--active` : ``}`}>
+            <li className={`movie-nav__item ${isReviewsTabActive ? `movie-nav__item--active` : ``}`}>
               <a onClick={this.handleClickReviews} href="#" className="movie-nav__link">Reviews</a>
             </li>
           </ul>
