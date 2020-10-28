@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app/app";
 import films from "./mocks/films";
+import reviews from "./mocks/reviews";
 
 const Settings = {
   MOVIE_NAME: `The Grand Budapest Hotel`,
@@ -15,6 +16,7 @@ ReactDOM.render(
       movieGenre={Settings.MOVIE_GENRE}
       movieYear={Settings.MOVIE_YEAR}
       films={films}
+      reviews={reviews}
     />,
     document.querySelector(`#root`)
 );

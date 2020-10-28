@@ -10,7 +10,7 @@ import PlayerPage from "../player-page/player-page";
 
 const App = (props) => {
 
-  const {movieName, movieGenre, movieYear, films} = props;
+  const {movieName, movieGenre, movieYear, films, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -38,7 +38,7 @@ const App = (props) => {
           exact
           path="/films/:id"
           render={({history}) => (
-            <MoviePage films={films} history={history} />
+            <MoviePage films={films} reviews={reviews} history={history} />
           )}
         />
         <Route
@@ -65,6 +65,7 @@ App.propTypes = {
   movieGenre: PropTypes.string.isRequired,
   movieYear: PropTypes.number.isRequired,
   films: PropTypes.array.isRequired,
+  reviews: PropTypes.array,
 };
 
 export default App;
