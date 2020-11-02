@@ -5,9 +5,12 @@ import PlayButton from "../play-button/play-button";
 import MyListButton from "../my-list-button/my-list-button";
 import Footer from "../footer/footer";
 import Header from "../header/header";
+import GenresList from "../genres-list/genres-list";
+import genres from '../../mocks/genres';
 
 const MainPage = (props) => {
-  const {movieName, movieGenre, movieYear, films, header, history} = props;
+  const {films, header, history, onGenreClick, activeGenre} = props;
+  const {name, genre, year, preview, poster} = films[0];
 
   return (
     <div className="main-page">
@@ -38,7 +41,7 @@ const MainPage = (props) => {
 
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={preview} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -47,14 +50,14 @@ const MainPage = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={poster} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{movieName}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{movieGenre}</span>
-                <span className="movie-card__year">{movieYear}</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{year}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -69,40 +72,9 @@ const MainPage = (props) => {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-
+          <GenresList films={films} genres={genres}
+            activeGenre={activeGenre}
+            onGenreClick={onGenreClick} />
           <FilmsList films={films}/>
 
           <div className="catalog__more">
@@ -117,12 +89,12 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  movieName: PropTypes.string.isRequired,
-  movieGenre: PropTypes.string.isRequired,
-  movieYear: PropTypes.number.isRequired,
   films: PropTypes.array.isRequired,
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
+  onGenreClick: PropTypes.func.isRequired,
+  activeGenre: PropTypes.string.isRequired
 };
 
 export default MainPage;
+

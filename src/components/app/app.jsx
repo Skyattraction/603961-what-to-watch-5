@@ -1,6 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
 import MyListPage from "../my-list-page/my-list-page";
@@ -8,9 +10,10 @@ import MoviePage from "../movie-page/movie-page";
 import AddReviewPage from "../add-review-page/add-review-page";
 import PlayerPage from "../player-page/player-page";
 
+
 const App = (props) => {
 
-  const {movieName, movieGenre, movieYear, films, reviews} = props;
+  const {films, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -20,10 +23,7 @@ const App = (props) => {
           path="/"
           render={({history}) => (
             <MainPage
-              movieName={movieName}
-              movieGenre={movieGenre}
-              movieYear={movieYear}
-              films={films}
+              {...props}
               header={{avatar: true, customClass: `movie-card__head`}}
               history={history}
             />
@@ -67,11 +67,22 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  movieName: PropTypes.string.isRequired,
-  movieGenre: PropTypes.string.isRequired,
-  movieYear: PropTypes.number.isRequired,
   films: PropTypes.array.isRequired,
   reviews: PropTypes.array,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  activeGenre: state.activeGenre,
+  reviews: state.reviews,
+  films: state.films
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreClick(genre) {
+    dispatch(ActionCreator.selectActiveGenre(genre));
+    dispatch(ActionCreator.filterFilmsByGenre(genre));
+  }
+});
+
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
