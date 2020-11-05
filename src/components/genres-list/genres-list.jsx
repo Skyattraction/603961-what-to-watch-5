@@ -8,7 +8,7 @@ class GenresList extends Component {
 
     this.state = {
       active: props.activeGenre,
-      genres: getGenresList(props.films)
+      genres: getGenresList()
     };
 
     this.handleClick = this.handleClick.bind(this);
