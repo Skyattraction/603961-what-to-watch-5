@@ -1,5 +1,4 @@
 export default [
-  `All genres`,
   `Drama`,
   `Comedy`,
   `Triller`,
@@ -7,4 +6,8 @@ export default [
   `Actions`,
   `Horror`,
   `Historical`,
+  `Kids&Family`,
+  `Documental`,
+  `Arthouse`,
+  `Sci-fi`,
 ];

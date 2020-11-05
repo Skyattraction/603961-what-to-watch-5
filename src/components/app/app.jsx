@@ -10,7 +10,6 @@ import MoviePage from "../movie-page/movie-page";
 import AddReviewPage from "../add-review-page/add-review-page";
 import PlayerPage from "../player-page/player-page";
 
-
 const App = (props) => {
 
   const {films, reviews} = props;
@@ -73,6 +72,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   activeGenre: state.activeGenre,
+  loadedFilmsNumber: state.loadedFilmsNumber,
   reviews: state.reviews,
   films: state.films
 });
@@ -81,6 +81,9 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreClick(genre) {
     dispatch(ActionCreator.selectActiveGenre(genre));
     dispatch(ActionCreator.filterFilmsByGenre(genre));
+  },
+  onShowMoreClick(loadedFilmsNumber) {
+    dispatch(ActionCreator.loadFilmsSet(loadedFilmsNumber));
   }
 });
 

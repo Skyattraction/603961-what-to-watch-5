@@ -6,10 +6,12 @@ import MyListButton from "../my-list-button/my-list-button";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 import GenresList from "../genres-list/genres-list";
+import {ShowMoreButton} from "../show-more-button/show-more-button";
+
 import genres from '../../mocks/genres';
 
 const MainPage = (props) => {
-  const {films, header, history, onGenreClick, activeGenre} = props;
+  const {films, header, history, onGenreClick, activeGenre, loadedFilmsNumber, onShowMoreClick} = props;
   const {name, genre, year, preview, poster} = films[0];
 
   return (
@@ -75,11 +77,10 @@ const MainPage = (props) => {
           <GenresList films={films} genres={genres}
             activeGenre={activeGenre}
             onGenreClick={onGenreClick} />
-          <FilmsList films={films}/>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <FilmsList films={films.slice(0, loadedFilmsNumber)} />
+          {films.length > loadedFilmsNumber &&
+            <ShowMoreButton films={films} loadedFilmsNumber={loadedFilmsNumber} onShowMoreClick={onShowMoreClick} />
+          }
         </section>
 
         <Footer />
@@ -93,8 +94,10 @@ MainPage.propTypes = {
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
   onGenreClick: PropTypes.func.isRequired,
-  activeGenre: PropTypes.string.isRequired
+  onShowMoreClick: PropTypes.func.isRequired,
+  activeGenre: PropTypes.string.isRequired,
+  loadedFilmsNumber: PropTypes.number.isRequired,
 };
 
-export default MainPage;
 
+export default MainPage;

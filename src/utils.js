@@ -1,20 +1,20 @@
 import {ALL_GENRES} from "./const";
 import {initialState} from './store/reducer';
 
-const {films} = initialState;
+const {films, genres} = initialState;
 
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export const getGenresList = (filmsList) => {
+export const getGenresList = () => {
 
   const genreList = [ALL_GENRES];
 
-  for (let film of filmsList) {
-    genreList.push((film.genre));
+  for (let genre of genres) {
+    genreList.push((genre));
   }
-  const updatedGenresList = new Set(genreList);
+  const updatedGenresList = new Set(genreList.slice(0, 10));
   return Array.from(updatedGenresList);
 };
 
