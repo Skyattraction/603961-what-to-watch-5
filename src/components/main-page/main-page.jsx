@@ -7,8 +7,11 @@ import Footer from "../footer/footer";
 import Header from "../header/header";
 import GenresList from "../genres-list/genres-list";
 import {ShowMoreButton} from "../show-more-button/show-more-button";
-
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import withGenresList from "../../hocs/with-genres-list/with-genres-list";
 import genres from '../../mocks/genres';
+
+const GenresListWrapped = withActiveItem(withGenresList(GenresList));
 
 const MainPage = (props) => {
   const {films, header, history, onGenreClick, activeGenre, loadedFilmsNumber, onShowMoreClick} = props;
@@ -74,7 +77,9 @@ const MainPage = (props) => {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList films={films} genres={genres}
+          <GenresListWrapped
+            films={films}
+            genres={genres}
             activeGenre={activeGenre}
             onGenreClick={onGenreClick} />
           <FilmsList films={films.slice(0, loadedFilmsNumber)} />

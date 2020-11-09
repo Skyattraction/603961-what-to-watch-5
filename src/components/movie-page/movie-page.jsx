@@ -7,6 +7,9 @@ import MyListButton from "../my-list-button/my-list-button";
 import Tabs from "../tabs/tabs";
 import MoreLikeThisList from "../more-like-this-list/more-like-this-list";
 import Header from "../header/header";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+
+const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
 
@@ -49,7 +52,7 @@ const MoviePage = (props) => {
             </div>
 
 
-            <Tabs films={films} reviews={reviews} />
+            <TabsWrapped films={films} reviews={reviews} />
           </div>
         </div>
       </section>

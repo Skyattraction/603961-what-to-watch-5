@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card";
+import withPreviewCard from "../../hocs/with-preview-card/with-preview-card";
+
+const PreviewCard = withPreviewCard(SmallMovieCard);
 
 const MoreLikeThisList = (props) => {
   const {films} = props;
@@ -9,7 +12,7 @@ const MoreLikeThisList = (props) => {
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__movies-list">
         {films.map((film, i) => (
-          <SmallMovieCard key={i} film={film} />
+          <PreviewCard key={i} film={film} />
         ))}
       </div>
     </section>

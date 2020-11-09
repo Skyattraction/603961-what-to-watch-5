@@ -1,6 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import AddNewCommentForm from "../add-new-comment-form/add-new-comment-form";
+import withCommentForm from "../../hocs/with-comment-form/with-comment-form";
+
+const AddNewCommentFormWrapped = withCommentForm(AddNewCommentForm);
 
 const AddReviewPage = () => {
 
@@ -45,7 +48,7 @@ const AddReviewPage = () => {
         </div>
       </div>
 
-      <AddNewCommentForm />
+      <AddNewCommentFormWrapped />
     </section>
   );
 };
