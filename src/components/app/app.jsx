@@ -9,6 +9,9 @@ import MyListPage from "../my-list-page/my-list-page";
 import MoviePage from "../movie-page/movie-page";
 import AddReviewPage from "../add-review-page/add-review-page";
 import PlayerPage from "../player-page/player-page";
+import withFullPlayer from "../../hocs/with-full-player/with-full-player";
+
+const FullPlayerPageWrapped = withFullPlayer(PlayerPage);
 
 const App = (props) => {
 
@@ -57,7 +60,7 @@ const App = (props) => {
           exact
           path="/player/:id"
           render={({history}) => (
-            <PlayerPage onExitButtonClick={() => history.push(`/`)} />
+            <FullPlayerPageWrapped films={films} onExitButtonClick={() => history.push(`/`)} />
           )}
         />
       </Switch>
