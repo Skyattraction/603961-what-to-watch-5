@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {selectActiveGenre, filterFilmsByGenre, loadFilmsSet} from '../../store/action';
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
 import MyListPage from "../my-list-page/my-list-page";
@@ -10,8 +10,10 @@ import MoviePage from "../movie-page/movie-page";
 import AddReviewPage from "../add-review-page/add-review-page";
 import PlayerPage from "../player-page/player-page";
 import withFullPlayer from "../../hocs/with-full-player/with-full-player";
+import withRouter from "../../hocs/with-router/with-router";
 
 const FullPlayerPageWrapped = withFullPlayer(PlayerPage);
+const MoviePageRouter = withRouter(MoviePage);
 
 const App = (props) => {
 
@@ -40,12 +42,13 @@ const App = (props) => {
         <Route
           exact
           path="/films/:id"
-          render={({history}) => (
-            <MoviePage
+          render={(props) => (
+            <MoviePageRouter
+
               films={films}
               reviews={reviews}
-              history={history}
               header={{avatar: true, customClass: `movie-card__head`}}
+              {...props}
             />
           )}
         />
@@ -73,20 +76,20 @@ App.propTypes = {
   reviews: PropTypes.array,
 };
 
-const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  loadedFilmsNumber: state.loadedFilmsNumber,
-  reviews: state.reviews,
-  films: state.films
+const mapStateToProps = ({FILMS, DATA}) => ({
+  activeGenre: FILMS.activeGenre,
+  loadedFilmsNumber: FILMS.loadedFilmsNumber,
+  reviews: DATA.reviews,
+  films: DATA.films,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGenreClick(genre) {
-    dispatch(ActionCreator.selectActiveGenre(genre));
-    dispatch(ActionCreator.filterFilmsByGenre(genre));
+  onGenreClickAction(genre) {
+    dispatch(selectActiveGenre(genre));
+    dispatch(filterFilmsByGenre(genre));
   },
-  onShowMoreClick(loadedFilmsNumber) {
-    dispatch(ActionCreator.loadFilmsSet(loadedFilmsNumber));
+  onShowMoreClickAction(loadedFilmsNumber) {
+    dispatch(loadFilmsSet(loadedFilmsNumber));
   }
 });
 

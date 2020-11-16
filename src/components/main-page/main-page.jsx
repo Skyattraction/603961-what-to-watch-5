@@ -14,8 +14,8 @@ import genres from '../../mocks/genres';
 const GenresListWrapped = withActiveItem(withGenresList(GenresList));
 
 const MainPage = (props) => {
-  const {films, header, history, onGenreClick, activeGenre, loadedFilmsNumber, onShowMoreClick} = props;
-  const {name, genre, year, preview, poster} = films[0];
+  const {films, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
+  const {name, genre, released, preview, poster_image} = films;
 
   return (
     <div className="main-page">
@@ -55,14 +55,14 @@ const MainPage = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={poster} alt={`${name} poster`} width="218" height="327" />
+              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{year}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -81,10 +81,10 @@ const MainPage = (props) => {
             films={films}
             genres={genres}
             activeGenre={activeGenre}
-            onGenreClick={onGenreClick} />
+            onGenreClickAction={onGenreClickAction} />
           <FilmsList films={films.slice(0, loadedFilmsNumber)} />
           {films.length > loadedFilmsNumber &&
-            <ShowMoreButton films={films} loadedFilmsNumber={loadedFilmsNumber} onShowMoreClick={onShowMoreClick} />
+            <ShowMoreButton films={films} loadedFilmsNumber={loadedFilmsNumber} onShowMoreClickAction={onShowMoreClickAction} />
           }
         </section>
 
@@ -98,8 +98,8 @@ MainPage.propTypes = {
   films: PropTypes.array.isRequired,
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
-  onGenreClick: PropTypes.func.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
+  onGenreClickAction: PropTypes.func.isRequired,
+  onShowMoreClickAction: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   loadedFilmsNumber: PropTypes.number.isRequired,
 };

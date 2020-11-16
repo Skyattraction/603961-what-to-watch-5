@@ -42,7 +42,7 @@ const withPreviewCard = (Component) => {
     film: PropTypes.shape({
       name: PropTypes.string.isRequired,
       preview: PropTypes.string.isRequired,
-      trailer: PropTypes.string.isRequired,
+      preview_video_link: PropTypes.string.isRequired,
     }).isRequired,
   };
 

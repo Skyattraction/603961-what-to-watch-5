@@ -16,11 +16,11 @@ const withGenresList = (Component) => {
     }
 
     handleClick(genre) {
-      const {onGenreClick} = this.props;
+      const {onGenreClickAction} = this.props;
       this.setState(() => ({
         activeItem: genre
       }));
-      (() => onGenreClick(genre))();
+      (() => onGenreClickAction(genre))();
     }
 
     render() {
@@ -34,7 +34,7 @@ const withGenresList = (Component) => {
   WithGenresList.propTypes = {
     films: PropTypes.array.isRequired,
     genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onGenreClick: PropTypes.func.isRequired,
+    onGenreClickAction: PropTypes.func.isRequired,
     activeGenre: PropTypes.string.isRequired
   };
 

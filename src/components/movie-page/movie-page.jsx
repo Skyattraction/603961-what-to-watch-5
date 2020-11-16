@@ -13,8 +13,9 @@ const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
 
-  const {films, reviews, header, history} = props;
-  const {name, genre, year, preview, poster} = films[0];
+  const {films, reviews, header, id, history} = props;
+
+  const {genre, name, released, preview, poster_image} = films;
   const genreFilter = films.filter((film) => film.genre === genre);
   return (
     <Fragment>
@@ -30,10 +31,10 @@ const MoviePage = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{name}</h2>
+  <h2 className="movie-card__title">{name}{id}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{year}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -48,7 +49,7 @@ const MoviePage = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={poster} alt={`${name} poster`} width="218" height="327" />
+              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
             </div>
 
 
@@ -69,9 +70,9 @@ MoviePage.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
     preview: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
+    poster_image: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   reviews: PropTypes.array,
   header: PropTypes.shape(),

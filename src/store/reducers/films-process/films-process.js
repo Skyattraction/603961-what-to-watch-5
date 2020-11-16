@@ -1,19 +1,13 @@
-import {extend} from '../utils';
-import {ActionType} from './action';
-import films from '../mocks/films';
-import genres from '../mocks/genres';
-import reviews from '../mocks/reviews';
-import {ALL_GENRES, NUMBER_OF_LOADED_FILMS} from '../const';
+import {extend} from '../../../utils';
+import {ActionType} from '../../action';
+import {ALL_GENRES, NUMBER_OF_LOADED_FILMS} from '../../../const';
 
 const initialState = {
   activeGenre: ALL_GENRES,
   loadedFilmsNumber: NUMBER_OF_LOADED_FILMS,
-  reviews,
-  films,
-  genres,
 };
 
-const reducer = (state = initialState, action) => {
+const filmsProcess = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SELECT_GENRE:
       return extend(state, {
@@ -37,4 +31,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer, initialState};
+export {filmsProcess, initialState};

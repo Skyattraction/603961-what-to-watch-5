@@ -1,5 +1,5 @@
 import {ALL_GENRES} from "./const";
-import {initialState} from './store/reducer';
+import {initialState} from './store/reducers/films-data/films-data';
 
 const {films, genres} = initialState;
 

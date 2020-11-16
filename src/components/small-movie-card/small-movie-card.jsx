@@ -12,7 +12,7 @@ const SmallMovieCard = (props) => {
   const {
     name,
     preview,
-    trailer
+    preview_video_link
   } = film;
 
   return (
@@ -20,12 +20,12 @@ const SmallMovieCard = (props) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link className="small-movie-card__image" to="/films/2">
-        <WithPreviewPlayerWrapped preview={preview} trailer={trailer} />
+      <Link className="small-movie-card__image" to="/films/:id">
+        <WithPreviewPlayerWrapped preview={preview} preview_video_link={preview_video_link} />
       </Link>
       {!isActive &&
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to="/films/2">{name}</Link>
+        <Link className="small-movie-card__link" to="/films/:id">{name}</Link>
       </h3>
       }
     </article>
@@ -36,7 +36,7 @@ SmallMovieCard.propTypes = {
   film: PropTypes.shape({
     name: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
-    trailer: PropTypes.string.isRequired,
+    preview_video_link: PropTypes.string.isRequired,
   }).isRequired,
   handleMouseEnter: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,

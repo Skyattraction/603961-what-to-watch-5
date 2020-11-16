@@ -34,14 +34,14 @@ const withPreviewPlayer = (Component) => {
     }
 
     render() {
-      const {trailer, preview} = this.props;
+      const {preview_video_link, preview} = this.props;
       const {isPlaying} = this.state;
 
       return (
         <Component
           {...this.props}
           videoRef={this.videoRef}
-          trailer={trailer}
+          preview_video_link={preview_video_link}
           preview={preview}
           isPlaying={isPlaying}
           handleMouseEnter={this.handleMouseEnter}
@@ -52,7 +52,7 @@ const withPreviewPlayer = (Component) => {
   }
 
   WithPreviewPlayer.propTypes = {
-    trailer: PropTypes.string.isRequired,
+    preview_video_link: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   };
 

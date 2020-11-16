@@ -68,10 +68,10 @@ const withFullPlayer = (Component) => {
 
     componentDidMount() {
       const {films} = this.props;
-      const {trailer} = films[0];
+      const {preview_video_link} = films;
       const video = this.videoRef.current;
 
-      video.src = trailer;
+      video.src = preview_video_link;
 
       this.setState({
         remainingTime: video.currentTime,
@@ -126,7 +126,7 @@ const withFullPlayer = (Component) => {
     films: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       preview: PropTypes.string.isRequired,
-      trailer: PropTypes.string.isRequired,
+      preview_video_link: PropTypes.string.isRequired,
     }).isRequired).isRequired,
     onExitButtonClick: PropTypes.func.isRequired,
   };

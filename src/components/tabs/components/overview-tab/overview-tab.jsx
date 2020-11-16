@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const OverviewTab = (props) => {
 
   const {films} = props;
-  const {director, actors, description, averagescore, quality, ratestotal} = films[1];
+  const {director, starring, description, averagescore, quality, ratestotal} = films;
 
   return (
     <Fragment>
@@ -22,7 +22,7 @@ const OverviewTab = (props) => {
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="movie-card__starring"><strong>Starring: {actors}</strong></p>
+        <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
       </div>
     </Fragment>
   );
@@ -31,7 +31,7 @@ const OverviewTab = (props) => {
 OverviewTab.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
     director: PropTypes.string.isRequired,
-    actors: PropTypes.string.isRequired,
+    starring: PropTypes.array.isRequired,
     description: PropTypes.string.isRequired,
     averagescore: PropTypes.string.isRequired,
     quality: PropTypes.string.isRequired,

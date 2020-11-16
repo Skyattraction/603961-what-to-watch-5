@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {loadFilmsSet} from "../../store/action";
 
 const ShowMoreButton = (props) => {
-  const {loadedFilmsNumber, onShowMoreClick} = props;
+  const {loadedFilmsNumber, onShowMoreClickAction} = props;
 
   return (
     <div className="catalog__more">
@@ -13,7 +13,7 @@ const ShowMoreButton = (props) => {
         className="catalog__button"
         onClick={(evt) => {
           evt.preventDefault();
-          onShowMoreClick(loadedFilmsNumber);
+          onShowMoreClickAction(loadedFilmsNumber);
         }}
       >
         Show more
@@ -25,17 +25,17 @@ const ShowMoreButton = (props) => {
 ShowMoreButton.propTypes = {
   films: PropTypes.array.isRequired,
   loadedFilmsNumber: PropTypes.number.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
+  onShowMoreClickAction: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
-  loadedFilmsNumber: state.loadedFilmsNumber
+const mapStateToProps = ({FILMS, DATA}) => ({
+  films: DATA.films,
+  loadedFilmsNumber: FILMS.loadedFilmsNumber
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onShowMoreClick(loadedFilmsNumber) {
-    dispatch(ActionCreator.loadFilmsSet(loadedFilmsNumber));
+  onShowMoreClickAction(loadedFilmsNumber) {
+    dispatch(loadFilmsSet(loadedFilmsNumber));
   }
 });
 
