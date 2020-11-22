@@ -6,15 +6,14 @@ import MyListButton from "../my-list-button/my-list-button";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 import GenresList from "../genres-list/genres-list";
-import {ShowMoreButton} from "../show-more-button/show-more-button";
+import ShowMoreButton from "../show-more-button/show-more-button";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withGenresList from "../../hocs/with-genres-list/with-genres-list";
-import genres from '../../mocks/genres';
 
 const GenresListWrapped = withActiveItem(withGenresList(GenresList));
 
 const MainPage = (props) => {
-  const {films, promoFilm, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
+  const {films, genres, promoFilm, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
   const {name, genre, released, previewImage, posterImage} = promoFilm[0] || {};
 
   return (

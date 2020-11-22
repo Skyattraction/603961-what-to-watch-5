@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {getGenresList} from '../../utils';
 
 const withGenresList = (Component) => {
   class WithGenresList extends PureComponent {
@@ -9,9 +8,8 @@ const withGenresList = (Component) => {
 
       this.state = {
         activeItem: this.props.activeGenre,
-        genres: getGenresList()
+        genres: this.props.genres,
       };
-
       this.handleClick = this.handleClick.bind(this);
     }
 
@@ -24,7 +22,8 @@ const withGenresList = (Component) => {
     }
 
     render() {
-      const {genres, activeItem} = this.state;
+      const {activeItem, genres} = this.state;
+
       return (
         <Component {...this.props} activeItem={activeItem} genres={genres} handleClick={this.handleClick} />
       );

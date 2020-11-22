@@ -3,6 +3,7 @@ import {ActionType} from '../../action';
 import {ALL_GENRES, NUMBER_OF_LOADED_FILMS} from '../../../const';
 
 const initialState = {
+  films: [],
   activeGenre: ALL_GENRES,
   loadedFilmsNumber: NUMBER_OF_LOADED_FILMS,
 };

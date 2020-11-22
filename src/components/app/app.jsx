@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {selectActiveGenre, filterFilmsByGenre, loadFilmsSet} from '../../store/action';
+import {getGenresList} from "../../selectors";
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
 import MyListPage from "../my-list-page/my-list-page";
@@ -18,7 +19,7 @@ const MoviePageRouter = withRouter(MoviePage);
 const App = (props) => {
 
   const {films, reviews} = props;
-
+  const genres = useSelector(getGenresList);
   return (
     <BrowserRouter>
       <Switch>
@@ -28,6 +29,7 @@ const App = (props) => {
           render={({history}) => (
             <MainPage
               {...props}
+              genres={genres}
               header={{avatar: true, customClass: `movie-card__head`}}
               history={history}
             />
