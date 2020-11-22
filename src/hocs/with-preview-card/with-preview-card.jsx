@@ -41,8 +41,8 @@ const withPreviewCard = (Component) => {
   WithPreviewCard.propTypes = {
     film: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      preview: PropTypes.string.isRequired,
-      preview_video_link: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
     }).isRequired,
   };
 

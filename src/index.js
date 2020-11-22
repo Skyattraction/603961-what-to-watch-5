@@ -8,7 +8,7 @@ import {createAPI} from "./services/api";
 import App from "./components/app/app";
 import rootReducer from "./store/reducers/root-reducer";
 import {requireAuthorization} from "./store/action";
-import {fetchFilmsList, checkAuth} from "./store/api-actions";
+import {fetchFilmsList, fetchPromoFilm, checkAuth} from "./store/api-actions";
 import {AuthorizationStatus} from "./const";
 
 const api = createAPI(
@@ -16,14 +16,15 @@ const api = createAPI(
 );
 
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api))
-  )
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api))
+    )
 );
 
 store.dispatch(fetchFilmsList());
-store.dispatch(checkAuth());
+store.dispatch(fetchPromoFilm());
+// store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>

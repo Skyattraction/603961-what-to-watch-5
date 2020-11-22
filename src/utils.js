@@ -56,3 +56,27 @@ export const getVideoProgressPosition = (video) => {
     return 0;
   }
 };
+
+export const mapPropsNames = (film) => {
+  const mapProps = extend(film, {
+    id: film.id,
+    name: film.name,
+    genre: film.genre,
+    description: film.description,
+    rating: film.rating,
+    director: film.director,
+    starring: film.starring,
+    released: film.released,
+    backgroundColor: film.background_color,
+    previewImage: film.preview_image,
+    posterImage: film.poster_image,
+    backgroundImage: film.background_image,
+    scoresCount: film.scores_count,
+    isFavorite: film.is_favorite,
+    runTime: film.run_time,
+    previewVideoLink: film.preview_video_link,
+    videoLink: film.video_link
+  });
+
+  return mapProps;
+};

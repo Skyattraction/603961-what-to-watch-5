@@ -2,18 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PreviewPlayer = (props) => {
-  const {preview_video_link, preview, videoRef, handleMouseEnter, handleMouseLeave, isPlaying} = props;
+  const {previewVideoLink, previewImage, videoRef, handleMouseEnter, handleMouseLeave, isPlaying} = props;
 
   return (
     <video
       ref={videoRef}
       className="small-movie-card__preview-video"
-      src={preview_video_link}
+      src={previewVideoLink}
       width={280}
       height={175}
       autoPlay={false}
       muted={true}
-      poster={preview}
+      poster={previewImage}
       loop={true}
       controls={isPlaying}
       onMouseEnter={handleMouseEnter}
@@ -23,8 +23,8 @@ const PreviewPlayer = (props) => {
 };
 
 PreviewPlayer.propTypes = {
-  preview_video_link: PropTypes.string.isRequired,
-  preview: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
   videoRef: PropTypes.shape().isRequired,
   handleMouseEnter: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,

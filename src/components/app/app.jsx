@@ -12,7 +12,7 @@ import PlayerPage from "../player-page/player-page";
 import withFullPlayer from "../../hocs/with-full-player/with-full-player";
 import withRouter from "../../hocs/with-router/with-router";
 
-const FullPlayerPageWrapped = withFullPlayer(PlayerPage);
+const FullPlayerPageWrapped = withRouter(withFullPlayer(PlayerPage));
 const MoviePageRouter = withRouter(MoviePage);
 
 const App = (props) => {
@@ -42,13 +42,12 @@ const App = (props) => {
         <Route
           exact
           path="/films/:id"
-          render={(props) => (
+          render={(RouteComponentProps) => (
             <MoviePageRouter
-
               films={films}
               reviews={reviews}
               header={{avatar: true, customClass: `movie-card__head`}}
-              {...props}
+              {...RouteComponentProps}
             />
           )}
         />
@@ -62,8 +61,8 @@ const App = (props) => {
         <Route
           exact
           path="/player/:id"
-          render={({history}) => (
-            <FullPlayerPageWrapped films={films} onExitButtonClick={() => history.push(`/`)} />
+          render={(RouteComponentProps) => (
+            <FullPlayerPageWrapped films={films} onExitButtonClick={() => RouteComponentProps.history.push(`/`)} {...RouteComponentProps} />
           )}
         />
       </Switch>
@@ -74,6 +73,10 @@ const App = (props) => {
 App.propTypes = {
   films: PropTypes.array.isRequired,
   reviews: PropTypes.array,
+  promoFilm: PropTypes.oneOfType(
+      PropTypes.arrayOf(PropTypes.shape({subProp: PropTypes.string})),
+      PropTypes.shape({subProp: PropTypes.string})),
+  history: PropTypes.func,
 };
 
 const mapStateToProps = ({FILMS, DATA}) => ({
@@ -81,6 +84,7 @@ const mapStateToProps = ({FILMS, DATA}) => ({
   loadedFilmsNumber: FILMS.loadedFilmsNumber,
   reviews: DATA.reviews,
   films: DATA.films,
+  promoFilm: DATA.promoFilm,
 });
 
 const mapDispatchToProps = (dispatch) => ({

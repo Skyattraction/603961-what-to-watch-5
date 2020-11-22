@@ -2,10 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PlayButton = (props) => {
-  const {history} = props;
-
+  const {history, id, promoFilm} = props;
   const onPlayButtonClick = () => {
-    history.push(`/player/:id`);
+    if (promoFilm) {
+      history.push(`/player/${promoFilm.id}`);
+    } else {
+      history.push(`/player/${id}`);
+    }
   };
 
   return (
@@ -22,4 +25,6 @@ export default PlayButton;
 
 PlayButton.propTypes = {
   history: PropTypes.shape().isRequired,
+  id: PropTypes.string,
+  promoFilm: PropTypes.array
 };

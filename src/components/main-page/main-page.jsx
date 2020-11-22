@@ -14,8 +14,8 @@ import genres from '../../mocks/genres';
 const GenresListWrapped = withActiveItem(withGenresList(GenresList));
 
 const MainPage = (props) => {
-  const {films, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
-  const {name, genre, released, preview, poster_image} = films;
+  const {films, promoFilm, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
+  const {name, genre, released, previewImage, posterImage} = promoFilm[0] || {};
 
   return (
     <div className="main-page">
@@ -46,7 +46,7 @@ const MainPage = (props) => {
 
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={preview} alt={name} />
+          <img src={previewImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -55,7 +55,7 @@ const MainPage = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
@@ -66,7 +66,7 @@ const MainPage = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <PlayButton history={history} />
+                <PlayButton history={history} promoFilm={promoFilm} />
                 <MyListButton history={history} />
               </div>
             </div>
@@ -96,6 +96,10 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   films: PropTypes.array.isRequired,
+  genres: PropTypes.array.isRequired,
+  promoFilm: PropTypes.oneOfType(
+      PropTypes.arrayOf(PropTypes.shape({subProp: PropTypes.string})),
+      PropTypes.shape({subProp: PropTypes.string})),
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
   onGenreClickAction: PropTypes.func.isRequired,

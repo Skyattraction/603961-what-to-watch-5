@@ -33,16 +33,20 @@ const withPreviewPlayer = (Component) => {
       video.play();
     }
 
+    componentWillUnmount() {
+      clearTimeout(this.timeCount);
+    }
+
     render() {
-      const {preview_video_link, preview} = this.props;
+      const {previewVideoLink, previewImage} = this.props;
       const {isPlaying} = this.state;
 
       return (
         <Component
           {...this.props}
           videoRef={this.videoRef}
-          preview_video_link={preview_video_link}
-          preview={preview}
+          previewVideoLink={previewVideoLink}
+          previewImage={previewImage}
           isPlaying={isPlaying}
           handleMouseEnter={this.handleMouseEnter}
           handleMouseLeave={this.handleMouseLeave}
@@ -52,8 +56,8 @@ const withPreviewPlayer = (Component) => {
   }
 
   WithPreviewPlayer.propTypes = {
-    preview_video_link: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
+    previewVideoLink: PropTypes.string.isRequired,
+    previewImage: PropTypes.string.isRequired,
   };
 
   return WithPreviewPlayer;

@@ -1,19 +1,19 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-const WithRouter = (Component) => {
+const withRouter = (Component) => {
   class WithRouter extends PureComponent {
     constructor(props) {
       super(props);
 
       this.state = {
         id: this.props.match.params.id,
+        films: this.props.films,
       };
     }
 
     render() {
       const {id} = this.state;
-
       return (
         <Component {...this.props} id={id}/>
       );
@@ -21,6 +21,7 @@ const WithRouter = (Component) => {
   }
 
   WithRouter.propTypes = {
+    films: PropTypes.array.isRequired,
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
@@ -30,4 +31,4 @@ const WithRouter = (Component) => {
 
 };
 
-export default WithRouter;
+export default withRouter;
