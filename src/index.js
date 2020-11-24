@@ -8,7 +8,7 @@ import {createAPI} from "./services/api";
 import App from "./components/app/app";
 import rootReducer from "./store/reducers/root-reducer";
 import {requireAuthorization} from "./store/action";
-import {fetchFilmsList, fetchPromoFilm, checkAuth} from "./store/api-actions";
+import {fetchFilmsList, fetchPromoFilm} from "./store/api-actions";
 import {AuthorizationStatus} from "./const";
 
 const api = createAPI(
