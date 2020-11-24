@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect, useSelector} from 'react-redux';
-import {selectActiveGenre, filterFilmsByGenre, loadFilmsSet} from '../../store/action';
+import {selectActiveGenre, loadFilmsSet} from '../../store/action';
 import {getGenresList} from "../../selectors";
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
@@ -46,6 +46,7 @@ const App = (props) => {
           path="/films/:id"
           render={(RouteComponentProps) => (
             <MoviePageRouter
+              key={RouteComponentProps.match.params.id}
               films={films}
               reviews={reviews}
               header={{avatar: true, customClass: `movie-card__head`}}
@@ -64,7 +65,12 @@ const App = (props) => {
           exact
           path="/player/:id"
           render={(RouteComponentProps) => (
-            <FullPlayerPageWrapped films={films} onExitButtonClick={() => RouteComponentProps.history.push(`/`)} {...RouteComponentProps} />
+            <FullPlayerPageWrapped
+              key={RouteComponentProps.match.params.id}
+              films={films}
+              onExitButtonClick={() => RouteComponentProps.history.push(`/`)}
+              {...RouteComponentProps}
+            />
           )}
         />
       </Switch>
@@ -92,7 +98,6 @@ const mapStateToProps = ({FILMS, DATA}) => ({
 const mapDispatchToProps = (dispatch) => ({
   onGenreClickAction(genre) {
     dispatch(selectActiveGenre(genre));
-    dispatch(filterFilmsByGenre(genre));
   },
   onShowMoreClickAction(loadedFilmsNumber) {
     dispatch(loadFilmsSet(loadedFilmsNumber));

@@ -1,8 +1,5 @@
-import {getFilmsByGenre} from '../utils';
-
 export const ActionType = {
   SELECT_GENRE: `SELECT_GENRE`,
-  GET_FILMS: `GET_FILMS`,
   LOAD_FILMS_SET: `LOAD_FILMS_SET`,
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
@@ -14,11 +11,6 @@ export const ActionType = {
 export const selectActiveGenre = (genre) => ({
   type: ActionType.SELECT_GENRE,
   payload: genre
-});
-
-export const filterFilmsByGenre = (genre) => ({
-  type: ActionType.GET_FILMS,
-  payload: getFilmsByGenre(genre)
 });
 
 export const loadFilmsSet = (loadedFilmsNumber) => ({

@@ -1,25 +1,23 @@
 import {createSelector} from "reselect";
-import {ALL_GENRES} from "./const";
+import {filterFilmsByGenre, addFilms, getGenres} from "./utils";
 
 export const selectAllGenres = (state) => state.DATA.films;
 export const selectActiveGenre = (state) => state.FILMS.activeGenre;
+export const getFilmsNumber = (state) => state.FILMS.loadedFilmsNumber;
 
-export const getFilmsByGenre = createSelector([selectActiveGenre, selectAllGenres], (genre, films) => {
-  if (genre === ALL_GENRES) {
-    return films;
-  } else {
-    return films.filter((film) => film.genre === genre);
-  }
-});
+export const getFilmsByGenre = createSelector(
+    selectAllGenres,
+    selectActiveGenre,
+    (films, activeGenre) => filterFilmsByGenre(films, activeGenre)
+);
 
-export const getGenresList = createSelector([selectAllGenres], (films) => {
-  const allGenres = [ALL_GENRES];
-  for (let film of films) {
-    if (allGenres.includes(film.genre) === false) {
-      allGenres.push((film.genre));
-    }
-  }
+export const getLoadedFilms = createSelector(
+    selectAllGenres,
+    getFilmsNumber,
+    (films, loadedFilmsNumber) => addFilms(films, loadedFilmsNumber)
+);
 
-  const updatedGenresList = new Set(allGenres.slice(0, 10));
-  return Array.from(updatedGenresList);
-});
+export const getGenresList = createSelector(
+    selectAllGenres,
+    (films) => getGenres(films)
+);

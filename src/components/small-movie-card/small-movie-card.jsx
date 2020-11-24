@@ -16,17 +16,19 @@ const SmallMovieCard = (props) => {
     previewVideoLink
   } = film;
 
+  const currentId = id - 1;
+
   return (
     <article className="small-movie-card catalog__movies-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link className="small-movie-card__image" to={`/films/${id}`}>
+      <Link className="small-movie-card__image" to={`/films/${currentId}`}>
         <WithPreviewPlayerWrapped previewImage={previewImage} previewVideoLink={previewVideoLink} />
       </Link>
       {!isActive &&
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${id}`}>{name}</Link>
+        <Link className="small-movie-card__link" to={`/films/${currentId}`}>{name}</Link>
       </h3>
       }
     </article>

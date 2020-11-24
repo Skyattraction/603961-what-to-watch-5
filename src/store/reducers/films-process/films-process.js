@@ -14,19 +14,10 @@ const filmsProcess = (state = initialState, action) => {
       return extend(state, {
         activeGenre: action.payload
       });
-
-    case ActionType.GET_FILMS:
-      return extend(state, {
-        films: action.payload,
-        loadedFilmsNumber: NUMBER_OF_LOADED_FILMS
-      });
-
     case ActionType.LOAD_FILMS_SET:
-      if (state.loadedFilmsNumber < state.films.length - NUMBER_OF_LOADED_FILMS) {
-        return extend(state, {loadedFilmsNumber: action.payload + NUMBER_OF_LOADED_FILMS});
-      } else {
-        return extend(state, {loadedFilmsNumber: state.films.length});
-      }
+      return extend(state, {
+        loadedFilmsNumber: action.payload
+      });
   }
 
   return state;

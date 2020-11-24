@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getFilmsByGenre} from "../../selectors";
 import FilmsList from "../films-list/films-list";
 import PlayButton from "../play-button/play-button";
 import MyListButton from "../my-list-button/my-list-button";
@@ -93,6 +95,10 @@ const MainPage = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  films: getFilmsByGenre(state)
+});
+
 MainPage.propTypes = {
   films: PropTypes.array.isRequired,
   genres: PropTypes.array.isRequired,
@@ -107,5 +113,5 @@ MainPage.propTypes = {
   loadedFilmsNumber: PropTypes.number.isRequired,
 };
 
-
-export default MainPage;
+export {MainPage};
+export default connect(mapStateToProps)(MainPage);

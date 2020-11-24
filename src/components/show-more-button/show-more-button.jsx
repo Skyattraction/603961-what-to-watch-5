@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {loadFilmsSet} from "../../store/action";
+import {getLoadedFilms, getFilmsByGenre} from "../../selectors";
 
 const ShowMoreButton = (props) => {
-  const {loadedFilmsNumber, onShowMoreClickAction} = props;
+  const {onShowMoreClickAction} = props;
+  const loadedFilmsNumber = useSelector(getLoadedFilms);
 
   return (
     <div className="catalog__more">
@@ -28,9 +30,9 @@ ShowMoreButton.propTypes = {
   onShowMoreClickAction: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({FILMS, DATA}) => ({
-  films: DATA.films,
-  loadedFilmsNumber: FILMS.loadedFilmsNumber
+const mapStateToProps = (state) => ({
+  films: getFilmsByGenre(state),
+  loadedFilmsNumber: getLoadedFilms(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

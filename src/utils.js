@@ -1,27 +1,11 @@
-import {ALL_GENRES} from "./const";
-import {initialState} from './store/reducers/films-data/films-data';
-
-const {films, genres} = initialState;
+import {ALL_GENRES, NUMBER_OF_LOADED_FILMS} from "./const";
 
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export const getGenresList = () => {
-
-  const genreList = [ALL_GENRES];
-
-  for (let genre of genres) {
-    genreList.push((genre));
-  }
-  const updatedGenresList = new Set(genreList.slice(0, 10));
-  return Array.from(updatedGenresList);
-};
-
-export const getFilmsByGenre = (activeGenre) => {
-
+export const filterFilmsByGenre = (films, activeGenre) => {
   const filmsByGenre = [];
-
   films.forEach((film) => {
     if (activeGenre === film.genre) {
       filmsByGenre.push(film);
@@ -32,6 +16,27 @@ export const getFilmsByGenre = (activeGenre) => {
     return films;
   } else {
     return filmsByGenre;
+  }
+};
+
+export const getGenres = (films) => {
+
+  const allGenres = [ALL_GENRES];
+  for (let film of films) {
+    if (allGenres.includes(film.genre) === false) {
+      allGenres.push((film.genre));
+    }
+  }
+
+  const updatedGenresList = new Set(allGenres.slice(0, 10));
+  return Array.from(updatedGenresList);
+};
+
+export const addFilms = (films, loadedFilmsNumber) => {
+  if (loadedFilmsNumber < films.length - NUMBER_OF_LOADED_FILMS) {
+    return loadedFilmsNumber + NUMBER_OF_LOADED_FILMS;
+  } else {
+    return films.length;
   }
 };
 
