@@ -7,13 +7,13 @@ import {NavLink} from "react-router-dom";
 
 const Tabs = (props) => {
   const {
+    id,
     films,
     reviews,
     activeItem,
     onClick
   } = props;
 
-  const {reviewdata} = reviews[0];
   const tabs = [{id: 0, name: `Overview`}, {id: 1, name: `Details`}, {id: 2, name: `Reviews`}];
 
   return (
@@ -41,21 +41,22 @@ const Tabs = (props) => {
         </ul>
       </nav>
       {activeItem === 0 &&
-        <OverviewTab films={films} />
+        <OverviewTab films={films} id={id} />
       }
 
       {activeItem === 1 &&
-        <DetailsTab films={films} />
+        <DetailsTab films={films} id={id} />
       }
 
       {activeItem === 2 &&
-        <ReviewsTab reviews={reviewdata} />
+        <ReviewsTab reviews={reviews} id={id} />
       }
     </div>
   );
 };
 
 Tabs.propTypes = {
+  id: PropTypes.string.isRequired,
   films: PropTypes.array.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     reviewdata: PropTypes.array,

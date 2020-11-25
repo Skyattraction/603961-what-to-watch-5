@@ -1,21 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getFilmsByGenre} from "../../selectors";
 import FilmsList from "../films-list/films-list";
 import PlayButton from "../play-button/play-button";
 import MyListButton from "../my-list-button/my-list-button";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 import GenresList from "../genres-list/genres-list";
-import {ShowMoreButton} from "../show-more-button/show-more-button";
+import ShowMoreButton from "../show-more-button/show-more-button";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withGenresList from "../../hocs/with-genres-list/with-genres-list";
-import genres from '../../mocks/genres';
 
 const GenresListWrapped = withActiveItem(withGenresList(GenresList));
 
 const MainPage = (props) => {
-  const {films, header, history, onGenreClick, activeGenre, loadedFilmsNumber, onShowMoreClick} = props;
-  const {name, genre, year, preview, poster} = films[0];
+  const {films, genres, promoFilm, header, history, onGenreClickAction, activeGenre, loadedFilmsNumber, onShowMoreClickAction} = props;
+  const {name, genre, released, previewImage, posterImage} = promoFilm[0] || {};
 
   return (
     <div className="main-page">
@@ -46,7 +47,7 @@ const MainPage = (props) => {
 
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={preview} alt={name} />
+          <img src={previewImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -55,18 +56,18 @@ const MainPage = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={poster} alt={`${name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{year}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <PlayButton history={history} />
+                <PlayButton history={history} promoFilm={promoFilm} />
                 <MyListButton history={history} />
               </div>
             </div>
@@ -81,10 +82,10 @@ const MainPage = (props) => {
             films={films}
             genres={genres}
             activeGenre={activeGenre}
-            onGenreClick={onGenreClick} />
+            onGenreClickAction={onGenreClickAction} />
           <FilmsList films={films.slice(0, loadedFilmsNumber)} />
           {films.length > loadedFilmsNumber &&
-            <ShowMoreButton films={films} loadedFilmsNumber={loadedFilmsNumber} onShowMoreClick={onShowMoreClick} />
+            <ShowMoreButton films={films} loadedFilmsNumber={loadedFilmsNumber} onShowMoreClickAction={onShowMoreClickAction} />
           }
         </section>
 
@@ -94,15 +95,23 @@ const MainPage = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  films: getFilmsByGenre(state)
+});
+
 MainPage.propTypes = {
   films: PropTypes.array.isRequired,
+  genres: PropTypes.array.isRequired,
+  promoFilm: PropTypes.oneOfType(
+      PropTypes.arrayOf(PropTypes.shape({subProp: PropTypes.string})),
+      PropTypes.shape({subProp: PropTypes.string})),
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
-  onGenreClick: PropTypes.func.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
+  onGenreClickAction: PropTypes.func.isRequired,
+  onShowMoreClickAction: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   loadedFilmsNumber: PropTypes.number.isRequired,
 };
 
-
-export default MainPage;
+export {MainPage};
+export default connect(mapStateToProps)(MainPage);

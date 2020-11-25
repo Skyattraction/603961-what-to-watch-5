@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {connect, useSelector} from 'react-redux';
+import {selectActiveGenre, loadFilmsSet} from '../../store/action';
+import {getGenresList} from "../../selectors";
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
 import MyListPage from "../my-list-page/my-list-page";
@@ -10,13 +11,15 @@ import MoviePage from "../movie-page/movie-page";
 import AddReviewPage from "../add-review-page/add-review-page";
 import PlayerPage from "../player-page/player-page";
 import withFullPlayer from "../../hocs/with-full-player/with-full-player";
+import withRouter from "../../hocs/with-router/with-router";
 
-const FullPlayerPageWrapped = withFullPlayer(PlayerPage);
+const FullPlayerPageWrapped = withRouter(withFullPlayer(PlayerPage));
+const MoviePageRouter = withRouter(MoviePage);
 
 const App = (props) => {
 
   const {films, reviews} = props;
-
+  const genres = useSelector(getGenresList);
   return (
     <BrowserRouter>
       <Switch>
@@ -26,6 +29,7 @@ const App = (props) => {
           render={({history}) => (
             <MainPage
               {...props}
+              genres={genres}
               header={{avatar: true, customClass: `movie-card__head`}}
               history={history}
             />
@@ -40,12 +44,13 @@ const App = (props) => {
         <Route
           exact
           path="/films/:id"
-          render={({history}) => (
-            <MoviePage
+          render={(RouteComponentProps) => (
+            <MoviePageRouter
+              key={RouteComponentProps.match.params.id}
               films={films}
               reviews={reviews}
-              history={history}
               header={{avatar: true, customClass: `movie-card__head`}}
+              {...RouteComponentProps}
             />
           )}
         />
@@ -59,8 +64,13 @@ const App = (props) => {
         <Route
           exact
           path="/player/:id"
-          render={({history}) => (
-            <FullPlayerPageWrapped films={films} onExitButtonClick={() => history.push(`/`)} />
+          render={(RouteComponentProps) => (
+            <FullPlayerPageWrapped
+              key={RouteComponentProps.match.params.id}
+              films={films}
+              onExitButtonClick={() => RouteComponentProps.history.push(`/`)}
+              {...RouteComponentProps}
+            />
           )}
         />
       </Switch>
@@ -71,22 +81,26 @@ const App = (props) => {
 App.propTypes = {
   films: PropTypes.array.isRequired,
   reviews: PropTypes.array,
+  promoFilm: PropTypes.oneOfType(
+      PropTypes.arrayOf(PropTypes.shape({subProp: PropTypes.string})),
+      PropTypes.shape({subProp: PropTypes.string})),
+  history: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  loadedFilmsNumber: state.loadedFilmsNumber,
-  reviews: state.reviews,
-  films: state.films
+const mapStateToProps = ({FILMS, DATA}) => ({
+  activeGenre: FILMS.activeGenre,
+  loadedFilmsNumber: FILMS.loadedFilmsNumber,
+  reviews: DATA.reviews,
+  films: DATA.films,
+  promoFilm: DATA.promoFilm,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGenreClick(genre) {
-    dispatch(ActionCreator.selectActiveGenre(genre));
-    dispatch(ActionCreator.filterFilmsByGenre(genre));
+  onGenreClickAction(genre) {
+    dispatch(selectActiveGenre(genre));
   },
-  onShowMoreClick(loadedFilmsNumber) {
-    dispatch(ActionCreator.loadFilmsSet(loadedFilmsNumber));
+  onShowMoreClickAction(loadedFilmsNumber) {
+    dispatch(loadFilmsSet(loadedFilmsNumber));
   }
 });
 

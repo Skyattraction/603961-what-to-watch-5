@@ -1,11 +1,11 @@
-import React from "react";
+import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 
 
 const DetailsTab = (props) => {
 
-  const {films} = props;
-  const {director, actors, runtime, genre, year} = films[1];
+  const {id, films} = props;
+  const {director, starring, runTime, genre, released} = films[id] || {};
 
   return (
     <div className="movie-card__text movie-card__row">
@@ -17,7 +17,15 @@ const DetailsTab = (props) => {
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
-            {actors}
+            {starring &&
+              starring.map((actor, i) => {
+                if (i < starring.length - 1) {
+                  return <Fragment key={`${actor}-${id}`}>{actor}, <br /></Fragment>;
+                } else {
+                  return actor;
+                }
+              })
+            }
           </span>
         </p>
       </div>
@@ -25,7 +33,7 @@ const DetailsTab = (props) => {
       <div className="movie-card__text-col">
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Run Time</strong>
-          <span className="movie-card__details-value">{runtime}</span>
+          <span className="movie-card__details-value">{runTime}</span>
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Genre</strong>
@@ -33,7 +41,7 @@ const DetailsTab = (props) => {
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Released</strong>
-          <span className="movie-card__details-value">{year}</span>
+          <span className="movie-card__details-value">{released}</span>
         </p>
       </div>
     </div>
@@ -41,12 +49,13 @@ const DetailsTab = (props) => {
 };
 
 DetailsTab.propTypes = {
+  id: PropTypes.number.isRequired,
   films: PropTypes.arrayOf(PropTypes.shape({
     director: PropTypes.string.isRequired,
-    actors: PropTypes.string.isRequired,
-    runtime: PropTypes.string.isRequired,
+    starring: PropTypes.array.isRequired,
+    runTime: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
   }).isRequired).isRequired,
 };
 

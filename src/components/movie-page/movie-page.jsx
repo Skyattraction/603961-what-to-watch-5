@@ -13,15 +13,16 @@ const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
 
-  const {films, reviews, header, history} = props;
-  const {name, genre, year, preview, poster} = films[0];
+  const {films, reviews, header, id, history} = props;
+  const {genre, name, released, previewImage, posterImage} = films[id] || {};
   const genreFilter = films.filter((film) => film.genre === genre);
+
   return (
     <Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={preview} alt={name} />
+            <img src={previewImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,11 +34,11 @@ const MoviePage = (props) => {
               <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{year}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <PlayButton history={history} />
+                <PlayButton history={history} id={id} />
                 <MyListButton history={history} />
                 <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
               </div>
@@ -48,11 +49,11 @@ const MoviePage = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={poster} alt={`${name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
 
-            <TabsWrapped films={films} reviews={reviews} />
+            <TabsWrapped films={films} id={id} reviews={reviews} />
           </div>
         </div>
       </section>
@@ -69,10 +70,11 @@ MoviePage.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
+    previewImage: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
   }).isRequired).isRequired,
+  id: PropTypes.string.isRequired,
   reviews: PropTypes.array,
   header: PropTypes.shape(),
   history: PropTypes.shape().isRequired,
