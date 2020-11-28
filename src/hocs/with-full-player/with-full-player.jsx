@@ -121,7 +121,7 @@ const withFullPlayer = (Component) => {
   }
 
   WithFullPlayer.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     films: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       backgroundImage: PropTypes.string.isRequired,

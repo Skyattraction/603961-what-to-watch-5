@@ -1,11 +1,12 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
+import {getQuality} from "../../../../utils";
 
 const OverviewTab = (props) => {
 
   const {id, films} = props;
-  const {director, starring, description, rating, quality, scoresCount} = films[id] || {};
-
+  const {director, starring, description, rating, scoresCount} = films[id] || {};
+  const quality = getQuality(rating);
   return (
     <Fragment>
       <div className="movie-rating">
@@ -44,8 +45,7 @@ OverviewTab.propTypes = {
     starring: PropTypes.array.isRequired,
     description: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-    quality: PropTypes.string.isRequired,
-    scoresCount: PropTypes.string.isRequired,
+    scoresCount: PropTypes.number.isRequired,
   }).isRequired).isRequired,
 };
 

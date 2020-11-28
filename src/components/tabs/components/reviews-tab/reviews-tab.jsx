@@ -33,7 +33,7 @@ class ReviewsTab extends PureComponent {
 }
 
 ReviewsTab.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   getReviews: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
