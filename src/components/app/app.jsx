@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Router as BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect, useSelector} from 'react-redux';
 import {selectActiveGenre, loadFilmsSet} from '../../store/action';
 import {getGenresList} from "../../selectors";
+import browserHistory from "../../browser-history";
+import {AppRoute} from "../../const";
+import PrivateRoute from "../private-route/private-route";
 import MainPage from "../main-page/main-page";
 import SignInPage from "../sign-in-page/sign-in-page";
 import MyListPage from "../my-list-page/my-list-page";
@@ -15,17 +18,18 @@ import withRouter from "../../hocs/with-router/with-router";
 
 const FullPlayerPageWrapped = withRouter(withFullPlayer(PlayerPage));
 const MoviePageRouter = withRouter(MoviePage);
+const AddReviewRouter = withRouter(AddReviewPage);
 
 const App = (props) => {
 
   const {films, reviews} = props;
   const genres = useSelector(getGenresList);
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route
           exact
-          path="/"
+          path={AppRoute.ROOT}
           render={({history}) => (
             <MainPage
               {...props}
@@ -35,15 +39,21 @@ const App = (props) => {
             />
           )}
         />
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <SignInPage header={{title: `Sign In`, customClass: `user-page__head`}} />
         </Route>
-        <Route exact path="/mylist">
-          <MyListPage films={films} header={{title: `My list`, avatar: true, customClass: `user-page__head`}} />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.MYLIST}
+          render={() => {
+            return (
+              <MyListPage films={films} header={{title: `My list`, avatar: true, customClass: `user-page__head`}} />
+            );
+          }}
+        />
         <Route
           exact
-          path="/films/:id"
+          path={AppRoute.FILMS}
           render={(RouteComponentProps) => (
             <MoviePageRouter
               key={RouteComponentProps.match.params.id}
@@ -54,21 +64,21 @@ const App = (props) => {
             />
           )}
         />
-        <Route
+        <PrivateRoute
           exact
-          path="/films/:id/review"
-          render={({history}) => (
-            <AddReviewPage films={films} history={history} />
+          path={AppRoute.FILMS_REVIEW}
+          render={(RouteComponentProps) => (
+            <AddReviewRouter films={films} {...RouteComponentProps} />
           )}
         />
         <Route
           exact
-          path="/player/:id"
+          path={AppRoute.PLAYER}
           render={(RouteComponentProps) => (
             <FullPlayerPageWrapped
               key={RouteComponentProps.match.params.id}
               films={films}
-              onExitButtonClick={() => RouteComponentProps.history.push(`/`)}
+              onExitButtonClick={() => RouteComponentProps.history.push(AppRoute.ROOT)}
               {...RouteComponentProps}
             />
           )}

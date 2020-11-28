@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {AppRoute} from "../../const";
 
 const MyListButton = (props) => {
   const {history} = props;
 
   const onMyListButtonClick = () => {
-    history.push(`/mylist`);
+    history.push(AppRoute.MYLIST);
   };
 
   return (

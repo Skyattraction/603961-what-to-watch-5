@@ -1,15 +1,18 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {AuthorizationStatus, AppRoute} from "../../const";
+import {getAuthorizationStatus} from "../../selectors";
 
 const Header = (props) => {
-  const {header} = props;
+  const {header, login} = props;
   const {title, avatar, customClass} = header;
 
   return (
     <header className={`page-header  ${customClass}`}>
       <div className="logo">
-        <Link to="/" className="logo__link">
+        <Link to={AppRoute.ROOT} className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>
@@ -22,9 +25,21 @@ const Header = (props) => {
 
       {avatar &&
         <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
+          {
+            (() => {
+              if (login === AuthorizationStatus.AUTH) {
+                return (
+                  <div className="user-block__avatar">
+                    <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                  </div>
+                );
+              } else {
+                return (
+                  <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
+                );
+              }
+            })()
+          }
         </div>
       }
     </header>
@@ -32,6 +47,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
+  login: PropTypes.string.isRequired,
   header: PropTypes.shape({
     title: PropTypes.string,
     avatar: PropTypes.bool,
@@ -39,4 +55,9 @@ Header.propTypes = {
   }),
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  login: getAuthorizationStatus(state)
+});
+
+export {Header};
+export default connect(mapStateToProps)(Header);

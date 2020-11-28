@@ -49,7 +49,7 @@ const DetailsTab = (props) => {
 };
 
 DetailsTab.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   films: PropTypes.arrayOf(PropTypes.shape({
     director: PropTypes.string.isRequired,
     starring: PropTypes.array.isRequired,

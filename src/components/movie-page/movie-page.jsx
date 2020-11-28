@@ -40,7 +40,7 @@ const MoviePage = (props) => {
               <div className="movie-card__buttons">
                 <PlayButton history={history} id={id} />
                 <MyListButton history={history} />
-                <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
+                <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>

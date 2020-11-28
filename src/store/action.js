@@ -6,6 +6,7 @@ export const ActionType = {
   LOAD_GENRES: `LOAD_GENRES`,
   LOAD_PROMO: `LOAD_PROMO`,
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
 };
 
 export const selectActiveGenre = (genre) => ({
@@ -36,4 +37,9 @@ export const loadPromoFilm = (promoFilm) => ({
 export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
 });

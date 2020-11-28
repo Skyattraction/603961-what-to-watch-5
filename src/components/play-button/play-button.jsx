@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 
 const PlayButton = (props) => {
   const {history, id, promoFilm} = props;
+
   const onPlayButtonClick = () => {
     if (promoFilm) {
-      history.push(`/player/${promoFilm.id}`);
+      const promoID = promoFilm[0].id - 1;
+      history.push(`/player/${promoID}`);
     } else {
       history.push(`/player/${id}`);
     }

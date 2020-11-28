@@ -4,6 +4,7 @@ import {filterFilmsByGenre, addFilms, getGenres} from "./utils";
 export const selectAllGenres = (state) => state.DATA.films;
 export const selectActiveGenre = (state) => state.FILMS.activeGenre;
 export const getFilmsNumber = (state) => state.FILMS.loadedFilmsNumber;
+export const getAuthorizationStatus = (state) => state.USER.authorizationStatus;
 
 export const getFilmsByGenre = createSelector(
     selectAllGenres,
